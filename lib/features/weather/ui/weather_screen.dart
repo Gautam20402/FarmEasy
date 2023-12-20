@@ -14,12 +14,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    List<String> drawerTitles = ['1', '2', '3', '4'];
+    List<String> drawerTitles = ['Crop Prices', 'Market', 'Feed', 'Chat'];
     List<IconData> drawerIcons = [
-      Icons.book,
-      Icons.rocket_launch,
-      Icons.handshake_outlined,
-      Icons.fire_truck_outlined
+      Icons.request_quote,
+      Icons.storefront_rounded,
+      Icons.newspaper,
+      Icons.smart_toy
     ];
     List<String> routes = ['/guide', '/competition', '/donate', '/vendor'];
     return Scaffold(
@@ -45,7 +45,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   title: Text(
                     drawerTitles[index],
                     style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 15,
                         color: Colors.white,

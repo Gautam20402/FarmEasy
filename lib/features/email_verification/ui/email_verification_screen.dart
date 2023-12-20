@@ -81,10 +81,9 @@ class _EmailVerficationScreenState extends State<EmailVerficationScreen> {
       listener: (context, state) {
         if (state is EmailVerificationDoneActionState) {
           Navigator.pushReplacementNamed(context, "/weather");
+        } else if (state is EmailVerificationNavToLandingScreenActionState) {
+          Navigator.pushReplacementNamed(context, "/landing");
         }
-        // else if (state is LoginNavToSignupState) {
-        //   Navigator.pushNamed(context, "/signup");
-        // }
       },
       builder: (context, state) {
         switch (state.runtimeType) {
@@ -150,11 +149,8 @@ class _EmailVerficationScreenState extends State<EmailVerficationScreen> {
                           ),
                           onPressed: () {
                             FirebaseAuth.instance.signOut();
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => const LoginScreen(),
-                              ),
-                            );
+                            emailVerificationBloc.add(
+                                EmailVerificationCancelButtonClickedEvent());
                           },
                         ),
                       ),
@@ -170,80 +166,3 @@ class _EmailVerficationScreenState extends State<EmailVerficationScreen> {
     );
   }
 }
-
-// return isEmailVerified
-//     ? const WeatherScreen()
-//     : SafeArea(
-//         child: Scaffold(
-//           body: SingleChildScrollView(
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.center,
-//               children: [
-//                 const SizedBox(height: 35),
-//                 const SizedBox(height: 30),
-//                 Center(
-//                   child: Text(
-//                     'Check your \n Email',
-//                     textAlign: TextAlign.center,
-//                     style: GoogleFonts.poppins(),
-//                   ),
-//                 ),
-//                 const SizedBox(height: 8),
-//                 Padding(
-//                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
-//                   child: Center(
-//                     child: Text(
-//                       'We have sent you a Email on  ${FirebaseAuth.instance.currentUser?.email}\n \n Please check spam folder if mail isn\'t in your inbox',
-//                       textAlign: TextAlign.center,
-//                       style: GoogleFonts.poppins(),
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBox(height: 16),
-//                 const Center(child: CircularProgressIndicator()),
-//                 const SizedBox(height: 8),
-//                 Padding(
-//                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
-//                   child: Center(
-//                     child: Text(
-//                       'Verifying email....',
-//                       textAlign: TextAlign.center,
-//                       style: GoogleFonts.poppins(),
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBox(height: 57),
-//                 Padding(
-//                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
-//                   child: ElevatedButton(
-//                     child: Text(
-//                       'Resend',
-//                       style: GoogleFonts.poppins(),
-//                     ),
-//                     onPressed: () async {
-//                       sendVerificationEmail();
-//                     },
-//                   ),
-//                 ),
-//                 Padding(
-//                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
-//                   child: ElevatedButton(
-//                     child: Text(
-//                       'Cancel',
-//                       style: GoogleFonts.poppins(),
-//                     ),
-//                     onPressed: () {
-//                       FirebaseAuth.instance.signOut();
-//                       Navigator.of(context).pushReplacement(
-//                         MaterialPageRoute(
-//                           builder: (context) => const LoginScreen(),
-//                         ),
-//                       );
-//                     },
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       );

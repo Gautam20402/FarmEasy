@@ -11,6 +11,8 @@ class EmailVerificationBloc
   EmailVerificationBloc() : super(EmailVerificationInitial()) {
     on<EmailVerificationInitialEvent>(emailVerificationInitialEvent);
     on<EmailVerificationDoneEvent>(emailVerificationDoneEvent);
+    on<EmailVerificationCancelButtonClickedEvent>(
+        emailVerificationCancelButtonClickedEvent);
   }
 
   FutureOr<void> emailVerificationInitialEvent(
@@ -22,5 +24,11 @@ class EmailVerificationBloc
   FutureOr<void> emailVerificationDoneEvent(
       EmailVerificationDoneEvent event, Emitter<EmailVerificationState> emit) {
     emit(EmailVerificationDoneActionState());
+  }
+
+  FutureOr<void> emailVerificationCancelButtonClickedEvent(
+      EmailVerificationCancelButtonClickedEvent event,
+      Emitter<EmailVerificationState> emit) {
+    emit(EmailVerificationNavToLandingScreenActionState());
   }
 }

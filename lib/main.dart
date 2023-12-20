@@ -1,4 +1,6 @@
 import 'package:farmeasy/const.dart';
+import 'package:farmeasy/features/crop_price/ui/crop_price_show_screen.dart';
+import 'package:farmeasy/features/market/ui/market_screen.dart';
 import 'package:farmeasy/features/weather/ui/weather_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +62,9 @@ class MyApp extends StatelessWidget {
         '/email': (context) => const EmailVerficationScreen(),
         '/forgot': (context) => const ForgotPasswordScreen(),
         '/weather': (context) => const WeatherScreen(),
-        // '/home': (context) => const HomePage(),
+        '/cropPrice': (context) => const CropPriceShowScreen(),
+        '/market': (context) => const MarketScreen(),
+        // '/weather': (context) => const WeatherScreen(),
       },
     );
   }
