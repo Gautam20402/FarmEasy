@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
       listenWhen: (previous, current) => current is SplashActionState,
       buildWhen: (previous, current) => current is! SplashActionState,
       listener: (context, state) {
-        if (state is SplashNavToMainScreenActionState) {
+        if (state is SplashNavToLandingScreenActionState) {
           Navigator.of(context).pushReplacementNamed("/landing");
         } else if (state is SplashNavToWeatherActionState) {
           Navigator.pushReplacementNamed(context, "/weather");

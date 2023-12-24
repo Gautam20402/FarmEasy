@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:farmeasy/features/splash/ui/splash_screen.dart';
 import 'package:meta/meta.dart';
 part 'splash_event.dart';
 part 'splash_state.dart';
@@ -23,6 +22,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
       SplashLogOutEvent event, Emitter<SplashState> emit) async {
     emit(SplashWaitingActionState());
     await Future.delayed(const Duration(seconds: 2));
-    emit(SplashNavToMainScreenActionState());
+    emit(SplashNavToLandingScreenActionState());
   }
 }
