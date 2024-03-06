@@ -1,3 +1,23 @@
 {
-  "hello" : "नमस्कार !"
+  "farmeasy":  "फार्मईज़ी",
+  "greetings": "नमस्ते! आपका स्वागत है",
+  "login": "लॉग इन करें",
+  "signup": "साइन अप करें",
+  "email": "ईमेल",
+  "password": "पासवर्ड",
+  "alreadyAccount":"क्या आपके पास पहले से एक खाता मौजूद है?",
+  "forgotPassword": "पासवर्ड भूल गए ?",
+  "donotHaveAcc": "कोई खाता नहीं है ?",
+  "temp": "तापमान",
+  "wind": "हवा",
+  "windSpeed": "हवा की गति",
+  "humidity": "नमी",
+  "nextForecast": "अगला पूर्वानुमान",
+  "viewFull": "पूरी रिपोर्ट देखें",
+  "currentWeather": "वर्तमान मौसम",
+  "tempMin": "ताप. न्यूनतम",
+  "tempMax": "ताप. अधिकतम",
+  "feelLike": "महसूस",
+  "cloudiness": "बादल",
+  "pressure": "दबाव"
 }

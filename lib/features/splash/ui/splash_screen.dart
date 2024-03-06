@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
           case SplashWaitingActionState:
             return Scaffold(
               body: Center(
-                child: Image.asset("assets/farmeasy_nobg.png"),
+                child: Image.asset("assets/farmeasy-logo-nobg.png"),
               ),
             );
           default:

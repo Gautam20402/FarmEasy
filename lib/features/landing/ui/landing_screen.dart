@@ -91,15 +91,15 @@ class _LandingScreenState extends State<LandingScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            "${AppLocalizations.of(context)?.hello} Welcome to ",
+                            "${AppLocalizations.of(context)?.greetings} ",
                             style: const TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.w600,
                               color: Colors.white,
                             ),
                           ),
-                          const Text(
-                            "FarmEasy",
+                          Text(
+                            "${AppLocalizations.of(context)?.farmeasy}",
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w900,
@@ -136,11 +136,11 @@ class _LandingScreenState extends State<LandingScreen> {
                                       landingBloc
                                           .add(LandingSignupClickedEvent());
                                     },
-                                    child: const SizedBox(
+                                    child: SizedBox(
                                       height: 50,
                                       child: Center(
                                           child: Text(
-                                        "SignUp",
+                                        "${AppLocalizations.of(context)?.signup}",
                                         style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.black,
@@ -156,11 +156,11 @@ class _LandingScreenState extends State<LandingScreen> {
                                       landingBloc
                                           .add(LandingLoginClickedEvent());
                                     },
-                                    child: const SizedBox(
+                                    child: SizedBox(
                                       height: 50,
                                       child: Center(
                                           child: Text(
-                                        "Login",
+                                        "${AppLocalizations.of(context)?.login}",
                                         style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.black,

@@ -1,6 +1,7 @@
 import 'package:farmeasy/const.dart';
 import 'package:farmeasy/features/crop_price/ui/crop_price_show_screen.dart';
 import 'package:farmeasy/features/market/ui/market_screen.dart';
+import 'package:farmeasy/features/weather/ui/full_weather_screen.dart';
 import 'package:farmeasy/features/weather/ui/weather_screen.dart';
 import 'package:farmeasy/localization/bloc/app_config_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';

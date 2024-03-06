@@ -13,6 +13,7 @@ class EmailVerificationBloc
     on<EmailVerificationDoneEvent>(emailVerificationDoneEvent);
     on<EmailVerificationCancelButtonClickedEvent>(
         emailVerificationCancelButtonClickedEvent);
+    on<WaitingForVerificationEvent>(waitingForVerificationEvent);
   }
 
   FutureOr<void> emailVerificationInitialEvent(
@@ -30,5 +31,10 @@ class EmailVerificationBloc
       EmailVerificationCancelButtonClickedEvent event,
       Emitter<EmailVerificationState> emit) {
     emit(EmailVerificationNavToLandingScreenActionState());
+  }
+
+  FutureOr<void> waitingForVerificationEvent(
+      WaitingForVerificationEvent event, Emitter<EmailVerificationState> emit) {
+    emit(WaitingForVerificationState());
   }
 }

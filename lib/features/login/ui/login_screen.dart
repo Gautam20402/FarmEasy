@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:farmeasy/const.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -57,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
       textInputAction: TextInputAction.next,
       cursorColor: CustomColors.primaryColor,
       decoration: InputDecoration(
-        labelText: 'Email',
+        labelText: "${AppLocalizations.of(context)?.email}",
         labelStyle: GoogleFonts.poppins(
           textStyle: const TextStyle(
             color: Colors.grey,
@@ -67,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
         prefixIcon:
             const Icon(CupertinoIcons.mail_solid, color: Color(0xFF023047)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Email",
+        hintText: "${AppLocalizations.of(context)?.email}",
         hintStyle:
             GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.grey)),
         focusedBorder: OutlineInputBorder(
@@ -96,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
       textInputAction: TextInputAction.done,
       cursorColor: CustomColors.primaryColor,
       decoration: InputDecoration(
-        labelText: 'Password',
+        labelText: "${AppLocalizations.of(context)?.password}",
         labelStyle: GoogleFonts.poppins(
           textStyle: const TextStyle(
             color: Colors.grey,
@@ -106,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
         prefixIcon:
             const Icon(CupertinoIcons.lock_fill, color: Color(0xFF023047)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Password",
+        hintText: "${AppLocalizations.of(context)?.password}",
         hintStyle:
             GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.grey)),
         focusedBorder: OutlineInputBorder(
@@ -126,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
         logIn(emailController.text, passwordController.text);
       },
       child: Text(
-        "Log In",
+        "${AppLocalizations.of(context)?.login}",
         textAlign: TextAlign.center,
         style: GoogleFonts.poppins(
           textStyle: const TextStyle(
@@ -167,8 +168,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Log In",
+                          Text(
+                            "${AppLocalizations.of(context)?.login}",
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w900,
@@ -185,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(height: 30),
                               TextButton(
                                 child: Text(
-                                  "Forgot Password?",
+                                  "${AppLocalizations.of(context)?.forgotPassword}",
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                       fontWeight: FontWeight.w600,
@@ -199,12 +200,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               const SizedBox(height: 4),
                               loginButton,
-                              const SizedBox(height: 4),
+                              const SizedBox(height: 16),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Don't have an account?",
+                                    "${AppLocalizations.of(context)?.donotHaveAcc}",
                                     style: GoogleFonts.poppins(
                                       textStyle: const TextStyle(
                                         fontWeight: FontWeight.w500,
@@ -213,7 +214,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ),
                                   TextButton(
-                                    child: Text("Signup",
+                                    child: Text(
+                                        "${AppLocalizations.of(context)?.signup}",
                                         style: GoogleFonts.poppins(
                                           textStyle: TextStyle(
                                             fontWeight: FontWeight.w500,

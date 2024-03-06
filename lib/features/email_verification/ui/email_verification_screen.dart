@@ -18,37 +18,40 @@ class EmailVerficationScreen extends StatefulWidget {
 }
 
 class _EmailVerficationScreenState extends State<EmailVerficationScreen> {
-  bool isEmailVerified = false;
-  bool canResendEmail = false;
+  late bool isEmailVerified;
+  late bool canResendEmail;
   Timer? timer;
   final EmailVerificationBloc emailVerificationBloc = EmailVerificationBloc();
 
   @override
   void initState() {
-    emailVerificationBloc.add(EmailVerificationInitialEvent());
-    super.initState();
+    emailVerificationBloc.add(WaitingForVerificationEvent());
+
     isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
 
     if (!isEmailVerified) {
+      emailVerificationBloc.add(EmailVerificationInitialEvent());
       sendVerificationEmail();
 
       timer = Timer.periodic(
         const Duration(seconds: 3),
-        (_) => checkEmailVerified(),
+        (_) => checkEmailVerified("Email Successfully Verified"),
       );
+    } else {
+      checkEmailVerified("Email already Verified");
     }
+    super.initState();
   }
 
-  checkEmailVerified() async {
+  checkEmailVerified(String warning) async {
     await FirebaseAuth.instance.currentUser?.reload();
-
     setState(() {
       isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
     });
 
     if (isEmailVerified) {
       emailVerificationBloc.add(EmailVerificationDoneEvent());
-      Fluttertoast.showToast(msg: "Email Successfully Verified");
+      Fluttertoast.showToast(msg: warning);
       timer?.cancel();
     }
   }
@@ -87,6 +90,12 @@ class _EmailVerficationScreenState extends State<EmailVerficationScreen> {
       },
       builder: (context, state) {
         switch (state.runtimeType) {
+          case WaitingForVerificationState:
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
           case EmailVerificationInitial:
             return SafeArea(
               child: Scaffold(
