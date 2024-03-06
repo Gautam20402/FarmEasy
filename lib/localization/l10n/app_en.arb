@@ -1,6 +1,23 @@
 {
-  "hello": "Hello !",
-  "@hello": {
-    "description" : "greetings"
-  }
+  "farmeasy":  "FarmEasy",
+  "greetings": "Hello ! Welcome to",
+  "login": "Login",
+  "signup": "SignUp",
+  "email": "Email",
+  "password": "Password",
+  "alreadyAccount": "Already have an account?",
+  "forgotPassword": "Forgot Password ?",
+  "donotHaveAcc": "Don't have an account ?",
+  "temp": "Temp",
+  "wind": "Wind",
+  "windSpeed": "Wind Speed",
+  "humidity": "Humidity",
+  "nextForecast": "Next Forecast",
+  "viewFull": "View full report",
+  "currentWeather": "Current Weather",
+  "tempMin": "Temp. Min",
+  "tempMax": "Temp. Max",
+  "feelLike": "Feels Like",
+  "cloudiness": "Cloudiness",
+  "pressure": "Pressure"
 }

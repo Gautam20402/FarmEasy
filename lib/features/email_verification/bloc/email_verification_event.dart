@@ -5,6 +5,8 @@ abstract class EmailVerificationEvent {}
 
 class EmailVerificationInitialEvent extends EmailVerificationEvent {}
 
+class WaitingForVerificationEvent extends EmailVerificationEvent {}
+
 class EmailVerificationDoneEvent extends EmailVerificationEvent {}
 
 class EmailVerificationCancelButtonClickedEvent

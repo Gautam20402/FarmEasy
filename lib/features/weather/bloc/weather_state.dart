@@ -4,3 +4,9 @@ part of 'weather_bloc.dart';
 abstract class WeatherState {}
 
 class WeatherInitial extends WeatherState {}
+
+class WeatherActionState extends WeatherState {}
+
+class WeatherLoadingState extends WeatherState {}
+
+class WeatherReadyState extends WeatherState {}

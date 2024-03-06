@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../const.dart';
 import '../../../models/user_model.dart';
@@ -58,7 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       textInputAction: TextInputAction.next,
       cursorColor: CustomColors.primaryColor,
       decoration: InputDecoration(
-        labelText: 'Email',
+        labelText: "${AppLocalizations.of(context)?.email}",
         labelStyle: GoogleFonts.poppins(
           textStyle: const TextStyle(
             color: Colors.grey,
@@ -68,7 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         prefixIcon:
             const Icon(CupertinoIcons.mail_solid, color: Color(0xFF023047)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Email",
+        hintText: "${AppLocalizations.of(context)?.email}",
         hintStyle: GoogleFonts.poppins(
           textStyle: const TextStyle(color: Colors.grey),
         ),
@@ -97,7 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       textInputAction: TextInputAction.next,
       cursorColor: CustomColors.primaryColor,
       decoration: InputDecoration(
-        labelText: 'Password',
+        labelText: "${AppLocalizations.of(context)?.password}",
         labelStyle: GoogleFonts.poppins(
           textStyle: const TextStyle(
             color: Colors.grey,
@@ -107,7 +108,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         prefixIcon:
             const Icon(CupertinoIcons.lock_fill, color: Color(0xFF023047)),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Password",
+        hintText: "${AppLocalizations.of(context)?.password}",
         hintStyle: GoogleFonts.poppins(
           textStyle: const TextStyle(color: Colors.grey),
         ),
@@ -128,7 +129,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         signUp(emailEditingController.text, passwordEditingController.text);
       },
       child: Text(
-        "Sign Up",
+        "${AppLocalizations.of(context)?.signup}",
         textAlign: TextAlign.center,
         style: GoogleFonts.poppins(
           textStyle: const TextStyle(
@@ -166,8 +167,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Sign Up",
+                          Text(
+                            "${AppLocalizations.of(context)?.signup}",
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w900,
@@ -183,21 +184,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               passwordField,
                               const SizedBox(height: 30),
                               signupButton,
-                              const SizedBox(height: 4),
+                              const SizedBox(height: 24),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    "Already have an account?",
-                                    style: GoogleFonts.poppins(
-                                      textStyle: const TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
+                                  SizedBox(
+                                    width: width * 0.45,
+                                    child: Text(
+                                      "${AppLocalizations.of(context)?.alreadyAccount}",
+                                      style: GoogleFonts.poppins(
+                                        textStyle: const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                        ),
                                       ),
                                     ),
                                   ),
                                   TextButton(
-                                    child: Text("Login",
+                                    child: Text(
+                                        "${AppLocalizations.of(context)?.login}",
                                         style: GoogleFonts.poppins(
                                           textStyle: TextStyle(
                                             fontWeight: FontWeight.w500,

@@ -8,8 +8,17 @@ part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   WeatherBloc() : super(WeatherInitial()) {
-    on<WeatherEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<WeatherLoadingEvent>(weatherLoadingEvent);
+    on<WeatherReadyEvent>(weatherReadyEvent);
+  }
+
+  FutureOr<void> weatherLoadingEvent(
+      WeatherLoadingEvent event, Emitter<WeatherState> emit) {
+    emit(WeatherLoadingState());
+  }
+
+  FutureOr<void> weatherReadyEvent(
+      WeatherReadyEvent event, Emitter<WeatherState> emit) {
+    emit(WeatherReadyState());
   }
 }
