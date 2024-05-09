@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:farmeasy/const.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -34,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     final emailField = TextFormField(
+      style: TextStyle(color: Colors.white),
       autofocus: false,
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
@@ -60,23 +62,24 @@ class _LoginScreenState extends State<LoginScreen> {
       decoration: InputDecoration(
         labelText: "${AppLocalizations.of(context)?.email}",
         labelStyle: GoogleFonts.poppins(
-          textStyle: const TextStyle(
-            color: Colors.grey,
+          textStyle: TextStyle(
+            color: Colors.grey[300],
             fontWeight: FontWeight.bold,
           ),
         ),
         prefixIcon:
-            const Icon(CupertinoIcons.mail_solid, color: Color(0xFF023047)),
+            Icon(CupertinoIcons.mail_solid, color: CustomColors.primaryColor),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "${AppLocalizations.of(context)?.email}",
         hintStyle:
-            GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.grey)),
+            GoogleFonts.poppins(textStyle: TextStyle(color: Colors.grey[300])),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: CustomColors.primaryColor),
         ),
       ),
     );
     final passwordField = TextFormField(
+      style: TextStyle(color: Colors.white),
       autofocus: false,
       controller: passwordController,
       obscureText: true,
@@ -99,17 +102,17 @@ class _LoginScreenState extends State<LoginScreen> {
       decoration: InputDecoration(
         labelText: "${AppLocalizations.of(context)?.password}",
         labelStyle: GoogleFonts.poppins(
-          textStyle: const TextStyle(
-            color: Colors.grey,
+          textStyle: TextStyle(
+            color: Colors.grey[300],
             fontWeight: FontWeight.bold,
           ),
         ),
         prefixIcon:
-            const Icon(CupertinoIcons.lock_fill, color: Color(0xFF023047)),
+            Icon(CupertinoIcons.lock_fill, color: CustomColors.primaryColor),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "${AppLocalizations.of(context)?.password}",
         hintStyle:
-            GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.grey)),
+            GoogleFonts.poppins(textStyle: TextStyle(color: Colors.grey[300])),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: CustomColors.primaryColor),
         ),
@@ -156,85 +159,102 @@ class _LoginScreenState extends State<LoginScreen> {
         switch (state.runtimeType) {
           case LoginInitial:
             return Scaffold(
-              body: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Center(
-                  child: Form(
-                    key: _loginformkey,
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 96, left: 40, right: 40),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${AppLocalizations.of(context)?.login}",
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.w900,
-                              color: Colors.black,
-                            ),
-                          ),
-                          const SizedBox(height: 64),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+              body: Stack(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Lottie.asset(
+                        "assets/farm-black.json",
+                        fit: BoxFit.cover,
+                        backgroundLoading: true,
+                        animate: true,
+                      ),
+                    ],
+                  ),
+                  SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Center(
+                      child: Form(
+                        key: _loginformkey,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 96, left: 40, right: 40),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              emailField,
-                              const SizedBox(height: 45),
-                              passwordField,
-                              const SizedBox(height: 30),
-                              TextButton(
-                                child: Text(
-                                  "${AppLocalizations.of(context)?.forgotPassword}",
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                      color: CustomColors.primaryColor,
-                                    ),
-                                  ),
+                              Text(
+                                "${AppLocalizations.of(context)?.login}",
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w900,
+                                  color: Colors.white,
                                 ),
-                                onPressed: () =>
-                                    loginBloc.add(LoginForgotClickedEvent()),
                               ),
-                              const SizedBox(height: 4),
-                              loginButton,
-                              const SizedBox(height: 16),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                              const SizedBox(height: 64),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    "${AppLocalizations.of(context)?.donotHaveAcc}",
-                                    style: GoogleFonts.poppins(
-                                      textStyle: const TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
+                                  emailField,
+                                  const SizedBox(height: 45),
+                                  passwordField,
+                                  const SizedBox(height: 30),
                                   TextButton(
                                     child: Text(
-                                        "${AppLocalizations.of(context)?.signup}",
-                                        style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16,
-                                            color: CustomColors.primaryColor,
-                                          ),
-                                        )),
+                                      "${AppLocalizations.of(context)?.forgotPassword}",
+                                      style: GoogleFonts.poppins(
+                                        textStyle: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16,
+                                          color: CustomColors.primaryColor,
+                                        ),
+                                      ),
+                                    ),
                                     onPressed: () => loginBloc
-                                        .add(LoginToSignupClickedEvent()),
+                                        .add(LoginForgotClickedEvent()),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  loginButton,
+                                  const SizedBox(height: 16),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "${AppLocalizations.of(context)?.donotHaveAcc}",
+                                        style: GoogleFonts.poppins(
+                                          textStyle: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        child: Text(
+                                            "${AppLocalizations.of(context)?.signup}",
+                                            style: GoogleFonts.poppins(
+                                              textStyle: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16,
+                                                color:
+                                                    CustomColors.primaryColor,
+                                              ),
+                                            )),
+                                        onPressed: () => loginBloc
+                                            .add(LoginToSignupClickedEvent()),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
             );
           default:

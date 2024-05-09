@@ -59,8 +59,10 @@ class _LandingScreenState extends State<LandingScreen> {
                           (locale) {
                             return PopupMenuItem<String>(
                               value: locale.languageCode,
-                              child:
-                                  Text(L10n.languageName(locale.languageCode)),
+                              child: Text(
+                                L10n.languageName(locale.languageCode),
+                                style: TextStyle(color: Colors.white),
+                              ),
                             );
                           },
                         ).toList();
@@ -136,6 +138,9 @@ class _LandingScreenState extends State<LandingScreen> {
                                       landingBloc
                                           .add(LandingSignupClickedEvent());
                                     },
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            Colors.white.withOpacity(0.4)),
                                     child: SizedBox(
                                       height: 50,
                                       child: Center(
@@ -143,7 +148,7 @@ class _LandingScreenState extends State<LandingScreen> {
                                         "${AppLocalizations.of(context)?.signup}",
                                         style: TextStyle(
                                           fontSize: 16,
-                                          color: Colors.black,
+                                          color: Colors.white,
                                         ),
                                       )),
                                     ),
@@ -156,6 +161,9 @@ class _LandingScreenState extends State<LandingScreen> {
                                       landingBloc
                                           .add(LandingLoginClickedEvent());
                                     },
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            Colors.white.withOpacity(0.4)),
                                     child: SizedBox(
                                       height: 50,
                                       child: Center(
@@ -163,7 +171,7 @@ class _LandingScreenState extends State<LandingScreen> {
                                         "${AppLocalizations.of(context)?.login}",
                                         style: TextStyle(
                                           fontSize: 16,
-                                          color: Colors.black,
+                                          color: Colors.white,
                                         ),
                                       )),
                                     ),

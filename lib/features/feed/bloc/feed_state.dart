@@ -6,3 +6,5 @@ abstract class FeedState {}
 abstract class FeedActionState extends FeedState {}
 
 class FeedInitial extends FeedState {}
+
+class FeedLoadCompleteState extends FeedState {}

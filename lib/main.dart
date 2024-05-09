@@ -1,5 +1,6 @@
 import 'package:farmeasy/const.dart';
 import 'package:farmeasy/features/crop_price/ui/crop_price_show_screen.dart';
+import 'package:farmeasy/features/feed/ui/feed_screen.dart';
 import 'package:farmeasy/features/market/ui/market_screen.dart';
 import 'package:farmeasy/features/weather/ui/full_weather_screen.dart';
 import 'package:farmeasy/features/weather/ui/weather_screen.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             fontFamily: GoogleFonts.poppins().fontFamily,
             colorScheme: ColorScheme(
-              brightness: Brightness.light,
+              brightness: Brightness.dark,
               background: CustomColors.backgroundColor,
               onBackground: CustomColors.textColor,
               primary: CustomColors.primaryColor,
@@ -84,7 +85,7 @@ class MyApp extends StatelessWidget {
             '/weather': (context) => const WeatherScreen(),
             '/cropPrice': (context) => const CropPriceShowScreen(),
             '/market': (context) => const MarketScreen(),
-            // '/weather': (context) => const WeatherScreen(),
+            '/feed': (context) => const FeedScreen(),
           },
         );
       }),
