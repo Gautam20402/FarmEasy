@@ -11,11 +11,13 @@ class FullWeatherScreen extends StatefulWidget {
     required this.forecast,
     required this.weatherDisc,
     required this.lanCode,
+    required this.colorCode,
   });
   final Weather weather;
   List<Weather> forecast;
   var weatherDisc;
   String lanCode;
+  final int colorCode;
   @override
   State<FullWeatherScreen> createState() => _FullWeatherScreenState();
 }
@@ -24,15 +26,19 @@ class _FullWeatherScreenState extends State<FullWeatherScreen> {
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemPositionsListener itemPositionsListener =
       ItemPositionsListener.create();
+
   @override
   Widget build(BuildContext context) {
     double myHeight = MediaQuery.of(context).size.height;
     double myWidth = MediaQuery.of(context).size.width;
+    final Color shuffleColor =
+        Colors.primaries[(widget.colorCode) % Colors.primaries.length];
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         backgroundColor: Colors.transparent,
+        foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -52,8 +58,8 @@ class _FullWeatherScreenState extends State<FullWeatherScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         gradient: LinearGradient(colors: [
-                          CustomColors.primaryColor,
-                          Colors.green.shade300,
+                          shuffleColor,
+                          shuffleColor.withOpacity(0.4),
                         ])),
                     child: Center(
                       child: Row(
@@ -156,6 +162,9 @@ class _FullWeatherScreenState extends State<FullWeatherScreen> {
                   scrollDirection: Axis.vertical,
                   itemCount: widget.forecast.length,
                   itemBuilder: (context, index) {
+                    final Color color = Colors.primaries[
+                        (widget.colorCode + index + 1) %
+                            Colors.primaries.length];
                     return Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: myWidth * 0.02,
@@ -165,8 +174,8 @@ class _FullWeatherScreenState extends State<FullWeatherScreen> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             gradient: LinearGradient(colors: [
-                              Colors.grey.withOpacity(0.35),
-                              Colors.grey.shade100,
+                              color,
+                              color.withOpacity(0.4),
                             ])),
                         child: Center(
                           child: Row(
@@ -187,7 +196,7 @@ class _FullWeatherScreenState extends State<FullWeatherScreen> {
                                     widget.forecast[index].date.toString(),
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   Text(
@@ -196,7 +205,7 @@ class _FullWeatherScreenState extends State<FullWeatherScreen> {
                                         : "${widget.weather?.weatherDescription.toString()}",
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   Text(
@@ -204,56 +213,56 @@ class _FullWeatherScreenState extends State<FullWeatherScreen> {
                                         .toString(),
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   Text(
                                     "${AppLocalizations.of(context)?.windSpeed} : ${(widget.weather.windSpeed! * 1.853184).toStringAsFixed(2)} km/h",
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   Text(
                                     "${AppLocalizations.of(context)?.humidity} : ${widget.forecast[index].humidity.toString()}",
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   Text(
                                     "${AppLocalizations.of(context)?.tempMin} : ${widget.forecast[index].tempMin.toString()}",
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   Text(
                                     "${AppLocalizations.of(context)?.tempMax} : ${widget.forecast[index].tempMax.toString()}",
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   Text(
                                     "${AppLocalizations.of(context)?.feelLike} ${widget.forecast[index].tempFeelsLike.toString()}",
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   Text(
                                     "${AppLocalizations.of(context)?.cloudiness} : ${widget.forecast[index].cloudiness.toString()}",
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   Text(
                                     "${AppLocalizations.of(context)?.pressure} : ${widget.forecast[index].pressure.toString()} mb",
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ],

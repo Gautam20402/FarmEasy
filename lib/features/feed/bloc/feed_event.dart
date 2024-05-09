@@ -4,3 +4,5 @@ part of 'feed_bloc.dart';
 abstract class FeedEvent {}
 
 class FeedInitialEvent extends FeedEvent {}
+
+class FeedLoadCompleteEvent extends FeedEvent {}

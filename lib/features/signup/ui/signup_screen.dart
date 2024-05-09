@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../const.dart';
 import '../../../models/user_model.dart';
@@ -36,6 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     final emailField = TextFormField(
+      style: TextStyle(color: Colors.white),
       autofocus: false,
       controller: emailEditingController,
       keyboardType: TextInputType.emailAddress,
@@ -61,17 +63,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
       decoration: InputDecoration(
         labelText: "${AppLocalizations.of(context)?.email}",
         labelStyle: GoogleFonts.poppins(
-          textStyle: const TextStyle(
-            color: Colors.grey,
+          textStyle: TextStyle(
+            color: Colors.grey[300],
             fontWeight: FontWeight.bold,
           ),
         ),
         prefixIcon:
-            const Icon(CupertinoIcons.mail_solid, color: Color(0xFF023047)),
+            Icon(CupertinoIcons.mail_solid, color: CustomColors.primaryColor),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "${AppLocalizations.of(context)?.email}",
         hintStyle: GoogleFonts.poppins(
-          textStyle: const TextStyle(color: Colors.grey),
+          textStyle: TextStyle(color: Colors.grey[300]),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: CustomColors.primaryColor),
@@ -79,6 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
     final passwordField = TextFormField(
+      style: TextStyle(color: Colors.white),
       autofocus: false,
       controller: passwordEditingController,
       obscureText: true,
@@ -100,17 +103,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
       decoration: InputDecoration(
         labelText: "${AppLocalizations.of(context)?.password}",
         labelStyle: GoogleFonts.poppins(
-          textStyle: const TextStyle(
-            color: Colors.grey,
+          textStyle: TextStyle(
+            color: Colors.grey[300],
             fontWeight: FontWeight.bold,
           ),
         ),
         prefixIcon:
-            const Icon(CupertinoIcons.lock_fill, color: Color(0xFF023047)),
+            Icon(CupertinoIcons.lock_fill, color: CustomColors.primaryColor),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "${AppLocalizations.of(context)?.password}",
         hintStyle: GoogleFonts.poppins(
-          textStyle: const TextStyle(color: Colors.grey),
+          textStyle: TextStyle(color: Colors.grey[300]),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: CustomColors.primaryColor),
@@ -155,75 +158,91 @@ class _SignUpScreenState extends State<SignUpScreen> {
         switch (state.runtimeType) {
           case SignupInitial:
             return Scaffold(
-              body: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Center(
-                  child: Form(
-                    key: _signupformKey,
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 96, left: 40, right: 40),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${AppLocalizations.of(context)?.signup}",
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.w900,
-                              color: Colors.black,
-                            ),
-                          ),
-                          const SizedBox(height: 64),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+              body: Stack(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Lottie.asset(
+                        "assets/farm-black.json",
+                        fit: BoxFit.cover,
+                        backgroundLoading: true,
+                        animate: true,
+                      ),
+                    ],
+                  ),
+                  SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Center(
+                      child: Form(
+                        key: _signupformKey,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 96, left: 40, right: 40),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              emailField,
-                              const SizedBox(height: 45),
-                              passwordField,
-                              const SizedBox(height: 30),
-                              signupButton,
-                              const SizedBox(height: 24),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                              Text(
+                                "${AppLocalizations.of(context)?.signup}",
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w900,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const SizedBox(height: 64),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  SizedBox(
-                                    width: width * 0.45,
-                                    child: Text(
-                                      "${AppLocalizations.of(context)?.alreadyAccount}",
-                                      style: GoogleFonts.poppins(
-                                        textStyle: const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16,
+                                  emailField,
+                                  const SizedBox(height: 45),
+                                  passwordField,
+                                  const SizedBox(height: 30),
+                                  signupButton,
+                                  const SizedBox(height: 24),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: width * 0.5,
+                                        child: Text(
+                                          "${AppLocalizations.of(context)?.alreadyAccount}",
+                                          style: GoogleFonts.poppins(
+                                            textStyle: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16,
+                                                color: Colors.white),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    child: Text(
-                                        "${AppLocalizations.of(context)?.login}",
-                                        style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16,
-                                            color: CustomColors.primaryColor,
-                                          ),
-                                        )),
-                                    onPressed: () {
-                                      signupBloc
-                                          .add(SignupToLoginClickedEvent());
-                                    },
+                                      TextButton(
+                                        child: Text(
+                                            "${AppLocalizations.of(context)?.login}",
+                                            style: GoogleFonts.poppins(
+                                              textStyle: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16,
+                                                color:
+                                                    CustomColors.primaryColor,
+                                              ),
+                                            )),
+                                        onPressed: () {
+                                          signupBloc
+                                              .add(SignupToLoginClickedEvent());
+                                        },
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
             );
           default:

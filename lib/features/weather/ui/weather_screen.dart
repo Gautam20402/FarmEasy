@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:farmeasy/features/landing/ui/landing_screen.dart';
 import 'package:farmeasy/features/weather/bloc/weather_bloc.dart';
@@ -6,9 +7,11 @@ import 'package:farmeasy/features/weather/ui/full_weather_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:translator/translator.dart';
 import 'package:weather/weather.dart';
@@ -37,6 +40,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
   List<Weather> _current = [];
   List<Weather> _fiveday = [];
   Timer? timer;
+  Random random = new Random();
+
   final WeatherBloc weatherBloc = WeatherBloc();
   final translator = GoogleTranslator();
   final ItemScrollController itemScrollController = ItemScrollController();
@@ -97,6 +102,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   Future<void> getAllInfo() async {
     //location
+    weatherBloc.add(WeatherLoadingEvent());
     _getCurrentLocation().then((value) {
       lat = value.latitude;
       long = value.longitude;
@@ -148,26 +154,28 @@ class _WeatherScreenState extends State<WeatherScreen> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-
+    int randomNum = random.nextInt(50);
+    final Color shuffleColor =
+        Colors.primaries[randomNum % Colors.primaries.length];
     List<String> drawerTitles = [
       'Crop Prices',
       'Market',
       'Feed',
-      'Chat',
+      // 'Chat',
       'Logout'
     ];
     List<IconData> drawerIcons = [
       Icons.request_quote,
       Icons.storefront_rounded,
       Icons.newspaper,
-      Icons.smart_toy,
+      // Icons.smart_toy,
       Icons.logout_outlined
     ];
     List<String> routes = [
-      '/guide',
-      '/competition',
-      '/donate',
-      '/vendor',
+      '/cropPrice',
+      '/market',
+      '/feed',
+      // '/vendor',
       'null'
     ];
 
@@ -185,9 +193,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
       builder: (context, state) {
         switch (state.runtimeType) {
           case WeatherLoadingState:
-            return const Scaffold(
+            return Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: Lottie.asset("assets/seed.json",
+                    fit: BoxFit.cover, backgroundLoading: true, animate: true),
               ),
             );
           case WeatherReadyState:
@@ -196,7 +205,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               drawerScrimColor: Colors.black87,
               extendBodyBehindAppBar: true,
               endDrawer: Drawer(
-                backgroundColor: CustomColors.primaryColor,
+                backgroundColor: shuffleColor.withOpacity(0.8),
                 child: Center(
                   child: ListView.builder(
                       itemCount: drawerTitles.length,
@@ -231,12 +240,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
               ),
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
+                foregroundColor: Colors.white,
                 automaticallyImplyLeading: false,
                 scrolledUnderElevation: 0,
                 leading: PopupMenuButton(
                   icon: const Icon(
                     Icons.language,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -248,7 +258,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       (locale) {
                         return PopupMenuItem<String>(
                           value: locale.languageCode,
-                          child: Text(L10n.languageName(locale.languageCode)),
+                          child: Text(
+                            L10n.languageName(locale.languageCode),
+                            style: TextStyle(color: Colors.white),
+                          ),
                           onTap: () => setState(() {}),
                         );
                       },
@@ -274,6 +287,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     String lanCode =
                         (context.watch<AppConfigCubit>().state.currentLocale)
                             .toString();
+
                     return Center(
                       child: SizedBox(
                         height: myHeight,
@@ -290,7 +304,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               style: GoogleFonts.poppins(
                                 textStyle: const TextStyle(
                                   fontSize: 40,
-                                  color: Colors.black,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
@@ -302,7 +316,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               style: GoogleFonts.poppins(
                                 textStyle: TextStyle(
                                   fontSize: 20,
-                                  color: Colors.black.withOpacity(0.5),
+                                  color: Colors.grey,
                                 ),
                               ),
                             ),
@@ -320,9 +334,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                   borderRadius: BorderRadius.circular(10),
                                   gradient: LinearGradient(
                                     colors: [
-                                      Colors.green.shade300,
-                                      CustomColors.primaryColor,
-                                      Colors.green.shade300,
+                                      //
+                                      shuffleColor.withOpacity(0.6),
+                                      shuffleColor,
+                                      shuffleColor.withOpacity(0.6),
                                     ],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
@@ -365,22 +380,26 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                         flex: 2,
                                         child: Column(
                                           children: [
-                                            Text(
-                                              "${AppLocalizations.of(context)?.temp}",
-                                              style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.black
-                                                      .withOpacity(0.5),
+                                            Flexible(
+                                              child: Text(
+                                                "${AppLocalizations.of(context)?.temp}",
+                                                style: GoogleFonts.poppins(
+                                                  textStyle: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.grey,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                            Text(
-                                              _weather!.temperature.toString(),
-                                              style: GoogleFonts.poppins(
-                                                textStyle: const TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.black,
+                                            Flexible(
+                                              child: Text(
+                                                _weather!.temperature
+                                                    .toString(),
+                                                style: GoogleFonts.poppins(
+                                                  textStyle: const TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -390,22 +409,25 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                         flex: 2,
                                         child: Column(
                                           children: [
-                                            Text(
-                                              "${AppLocalizations.of(context)?.wind}",
-                                              style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.black
-                                                      .withOpacity(0.5),
+                                            Flexible(
+                                              child: Text(
+                                                "${AppLocalizations.of(context)?.wind}",
+                                                style: GoogleFonts.poppins(
+                                                  textStyle: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.grey,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                            Text(
-                                              "${(_fiveday[index].windSpeed! * 1.853184).toStringAsFixed(2)} km/h",
-                                              style: GoogleFonts.poppins(
-                                                textStyle: const TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.black,
+                                            Flexible(
+                                              child: Text(
+                                                "${(_fiveday[index].windSpeed! * 1.853184).toStringAsFixed(2)} km/h",
+                                                style: GoogleFonts.poppins(
+                                                  textStyle: const TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -415,22 +437,25 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                       flex: 2,
                                       child: Column(
                                         children: [
-                                          Text(
-                                            "${AppLocalizations.of(context)?.humidity}",
-                                            style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.black
-                                                    .withOpacity(0.5),
+                                          Flexible(
+                                            child: Text(
+                                              "${AppLocalizations.of(context)?.humidity}",
+                                              style: GoogleFonts.poppins(
+                                                textStyle: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.grey,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                          Text(
-                                            _weather!.humidity.toString(),
-                                            style: GoogleFonts.poppins(
-                                              textStyle: const TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.black,
+                                          Flexible(
+                                            child: Text(
+                                              _weather!.humidity.toString(),
+                                              style: GoogleFonts.poppins(
+                                                textStyle: const TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -456,7 +481,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                     style: GoogleFonts.poppins(
                                       textStyle: TextStyle(
                                         fontSize: 18,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
@@ -471,6 +496,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                                     forecast: _fiveday,
                                                     weatherDisc: _weatherDisc,
                                                     lanCode: lanCode,
+                                                    colorCode: randomNum,
                                                   )));
                                     },
                                     child: Text(
@@ -501,6 +527,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                   scrollDirection: Axis.horizontal,
                                   itemCount: _fiveday.length,
                                   itemBuilder: (context, index) {
+                                    final Color color = Colors.primaries[
+                                        (randomNum + index) %
+                                            Colors.primaries.length];
                                     return Padding(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: myWidth * 0.02,
@@ -508,21 +537,15 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                       child: Container(
                                         width: myWidth * 0.6,
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          // color: index == 0
-                                          //     ? null
-                                          //     : Colors.grey.withOpacity(0.4),
-                                          gradient: index == 0
-                                              ? LinearGradient(colors: [
-                                                  CustomColors.primaryColor,
-                                                  Colors.green.shade300,
-                                                ])
-                                              : LinearGradient(colors: [
-                                                  Colors.grey.withOpacity(0.35),
-                                                  Colors.grey.shade100,
-                                                ]),
-                                        ),
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            // color: index == 0
+                                            //     ? null
+                                            //     : Colors.grey.withOpacity(0.4),
+                                            gradient: LinearGradient(colors: [
+                                              color,
+                                              color.withOpacity(0.4),
+                                            ])),
                                         child: Center(
                                           child: Row(
                                             mainAxisAlignment:
@@ -539,15 +562,15 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 children: [
-                                                  Text(
-                                                    _fiveday[index]
-                                                        .date
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                      color: index == 0
-                                                          ? Colors.white
-                                                          : Colors.black,
+                                                  Flexible(
+                                                    child: Text(
+                                                      _fiveday[index]
+                                                          .date
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.white,
+                                                      ),
                                                     ),
                                                   ),
                                                   Text(
@@ -556,9 +579,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                                         .toString(),
                                                     style: TextStyle(
                                                       fontSize: 18,
-                                                      color: index == 0
-                                                          ? Colors.white
-                                                          : Colors.black,
+                                                      color: Colors.white,
                                                     ),
                                                   ),
                                                 ],
